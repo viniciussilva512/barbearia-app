@@ -95,10 +95,52 @@ Evitar utilizar cores diretamente nos componentes quando existir um token semân
 
 ## Tipografia
 
-A combinação tipográfica atual é:
+### Tipografia oficial
 
-- **Barlow Condensed** para títulos e elementos de destaque.
-- **Inter** para textos, informações de interface e conteúdo funcional.
+O sistema utiliza duas famílias tipográficas:
+
+- **Archivo Narrow** — display, títulos, headings e elementos de destaque.
+- **DM Sans** — corpo de texto, interface, botões, formulários e números.
+
+A combinação foi escolhida após comparação visual entre quatro alternativas em um
+laboratório tipográfico dedicado.
+
+### Archivo Narrow
+
+Utilizada para criar personalidade visual e presença nos títulos.
+
+Aplicações:
+
+- Hero headings
+- Títulos de seção
+- Nomes de serviços
+- Destaques editoriais
+- Elementos de grande hierarquia
+
+### DM Sans
+
+Utilizada como fonte funcional da interface.
+
+Aplicações:
+
+- Texto corrido
+- Labels
+- Botões
+- Inputs
+- Informações de serviço
+- Valores monetários
+- Horários
+- Dados e números
+
+### Implementação
+
+As fontes são carregadas utilizando `next/font/google`.
+
+Variáveis CSS:
+
+```text
+--font-archivo-narrow
+--font-dm-sans
 
 ### Barlow Condensed
 
