@@ -47,13 +47,13 @@ export default function Home() {
             <div className="space-y-5">
               <h1 className="text-5xl font-semibold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
                 Seu corte.
-                <span className="block text-primary">Seu horÃ¡rio.</span>
-                <span className="block">Sem complicaÃ§Ã£o.</span>
+                <span className="block text-primary">Seu horário</span>
+                <span className="block">Sem complicação.</span>
               </h1>
 
               <p className="max-w-xl text-lg leading-8 text-muted-foreground">
-                Qualidade acima da mÃ©dia, preÃ§o justo e um atendimento feito
-                para vocÃª sair daqui se sentindo bem.
+                Qualidade acima da média, preço justo e um atendimento feito
+                para você sair daqui se sentindo bem.
               </p>
             </div>
 
@@ -79,16 +79,16 @@ export default function Home() {
       <section id="servicos" className="mx-auto max-w-6xl px-6 py-20 lg:px-8">
         <div className="mb-10 max-w-2xl space-y-3">
           <span className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
-            ServiÃ§os
+            Serviços
           </span>
 
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-            Escolha o que combina com vocÃª.
+            Escolha o que combina com você
           </h2>
 
           <p className="text-muted-foreground">
-            ServiÃ§os essenciais, preÃ§os transparentes e horÃ¡rios definidos
-            para vocÃª nÃ£o perder tempo.
+            Serviços essenciais, preços transparentes e horários definidos
+            para você não perder tempo.
           </p>
         </div>
 
@@ -126,17 +126,17 @@ export default function Home() {
         <div className="mx-auto max-w-6xl px-6 py-20 lg:px-8">
           <div className="max-w-2xl space-y-5">
             <span className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
-              A experiÃªncia
+              A experiência
             </span>
 
             <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              Um ambiente clÃ¡ssico com uma experiÃªncia moderna.
+              Um ambiente classico com uma experiência moderna.
             </h2>
 
             <p className="text-lg leading-8 text-muted-foreground">
-              A ideia Ã© simples: oferecer um atendimento profissional, um
-              ambiente masculino acolhedor e um serviÃ§o de qualidade sem
-              transformar o corte em uma experiÃªncia complicada.
+              A ideia é simples: oferecer um atendimento profissional, um
+              ambiente masculino acolhedor e um serviço de qualidade sem
+              transformar o corte em uma experiência complicada.
             </p>
           </div>
         </div>
@@ -146,16 +146,16 @@ export default function Home() {
         <div className="flex flex-col gap-6 rounded-2xl border border-border bg-card p-8 sm:p-10 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-2">
             <h2 className="text-2xl font-semibold tracking-tight">
-              Pronto para marcar seu horÃ¡rio?
+              Pronto para marcar seu horário
             </h2>
 
             <p className="text-muted-foreground">
-              Escolha o serviÃ§o, o barbeiro e o melhor horÃ¡rio para vocÃª.
+              Escolha o serviço, o barbeiro e o melhor horário para você.
             </p>
           </div>
 
           <Button size="lg">
-            Agendar horÃ¡rio
+            Agendar horário
             <ArrowRight />
           </Button>
         </div>

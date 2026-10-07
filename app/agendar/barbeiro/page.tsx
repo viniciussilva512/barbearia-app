@@ -1,14 +1,14 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { Suspense, useMemo, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { ArrowLeft, ArrowRight, Check } from "lucide-react"
+import { ArrowLeft, ArrowRight, Check, UserRound } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { barbers } from "@/src/domain/barbers/barbers"
 import { services } from "@/src/domain/services/services"
 
-export default function BarberSelectionPage() {
+function BarberSelectionContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -55,22 +55,23 @@ export default function BarberSelectionPage() {
           </h1>
 
           <p className="max-w-2xl text-muted-foreground">
-            Selecione o barbeiro que você prefere para realizar seu
-            atendimento.
+            Selecione o profissional que realizará seu atendimento.
           </p>
-
-          {selectedServices.length > 0 && (
-            <div className="mt-5 rounded-lg border border-border bg-card p-4">
-              <p className="text-sm font-medium">Serviços selecionados</p>
-
-              <p className="mt-1 text-sm text-muted-foreground">
-                {selectedServices.map((service) => service.name).join(" • ")}
-              </p>
-            </div>
-          )}
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="rounded-xl border border-border bg-card p-6">
+          <div>
+            <p className="text-sm text-muted-foreground">Serviços</p>
+
+            <p className="mt-2 font-medium">
+              {selectedServices.length > 0
+                ? selectedServices.map((service) => service.name).join(" • ")
+                : "Nenhum serviço selecionado"}
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {barbers.map((barber) => {
             const isSelected = selectedBarberId === barber.id
 
@@ -80,15 +81,25 @@ export default function BarberSelectionPage() {
                 type="button"
                 onClick={() => setSelectedBarberId(barber.id)}
                 aria-pressed={isSelected}
-                className={`rounded-xl border p-5 text-left transition-colors ${
+                className={`flex items-center justify-between rounded-xl border p-5 text-left transition-colors ${
                   isSelected
                     ? "border-primary bg-primary/5"
                     : "border-border bg-card hover:border-primary/50"
                 }`}
               >
-                <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div
+                    className={`flex size-11 items-center justify-center rounded-full ${
+                      isSelected
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    <UserRound className="size-5" />
+                  </div>
+
                   <div>
-                    <h2 className="font-semibold">{barber.name}</h2>
+                    <p className="font-medium">{barber.name}</p>
 
                     {barber.isOwner && (
                       <p className="mt-1 text-sm text-muted-foreground">
@@ -96,17 +107,13 @@ export default function BarberSelectionPage() {
                       </p>
                     )}
                   </div>
-
-                  <span
-                    className={`flex size-6 items-center justify-center rounded-full border ${
-                      isSelected
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border"
-                    }`}
-                  >
-                    {isSelected && <Check className="size-3.5" />}
-                  </span>
                 </div>
+
+                {isSelected && (
+                  <div className="flex size-7 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                    <Check className="size-4" />
+                  </div>
+                )}
               </button>
             )
           })}
@@ -114,7 +121,7 @@ export default function BarberSelectionPage() {
 
         <div className="mt-10 flex items-center justify-between gap-4">
           <a
-            href="/agendar"
+            href={`/agendar?servicos=${selectedServiceIds.join(",")}`}
             className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-input bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
           >
             <ArrowLeft />
@@ -132,5 +139,13 @@ export default function BarberSelectionPage() {
         </div>
       </div>
     </main>
+  )
+}
+
+export default function BarberSelectionPage() {
+  return (
+    <Suspense>
+      <BarberSelectionContent />
+    </Suspense>
   )
 }

@@ -81,7 +81,7 @@ export const calculateServicesDuration = (selectedServices: Service[]) =>
 export const DEPOSIT_IN_CENTS = 2000
 
 export const servicesRequireDeposit = (selectedServices: Service[]) =>
-  selectedServices.some((service) => service.requiresDeposit)
+  calculateServicesTotal(selectedServices) > 5000
 
 export const calculateDeposit = (selectedServices: Service[]) =>
   servicesRequireDeposit(selectedServices) ? DEPOSIT_IN_CENTS : 0
@@ -119,4 +119,3 @@ export const toggleServiceSelection = (
     ? selectedServiceIds.filter((id) => id !== serviceId)
     : [...selectedServiceIds, serviceId]
 }
-
