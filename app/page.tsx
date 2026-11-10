@@ -1,7 +1,7 @@
-﻿import { Button, buttonVariants } from "@/components/ui/button";
+﻿import Link from "next/link";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { services } from "@/src/domain/services/services";
 import { ArrowRight, Clock3, Scissors } from "lucide-react";
-
 
 export default function Home() {
   return (
@@ -13,9 +13,7 @@ export default function Home() {
               <Scissors className="size-4" />
             </div>
 
-            <span className="font-semibold tracking-tight">
-              Barbearia
-            </span>
+            <span className="font-semibold tracking-tight">Barbearia</span>
           </div>
 
           <nav className="hidden items-center gap-8 text-sm text-muted-foreground sm:flex">
@@ -33,7 +31,9 @@ export default function Home() {
             </a>
           </nav>
 
-          <Button size="sm">Agendar</Button>
+          <Link href="/agendar" className={buttonVariants({ size: "sm" })}>
+            Agendar
+          </Link>
         </div>
       </header>
 
@@ -58,17 +58,17 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Button size="lg">
-                Agendar horÃ¡rio
+              <Link href="/agendar" className={buttonVariants({ size: "lg" })}>
+                Agendar horário
                 <ArrowRight />
-              </Button>
+              </Link>
 
               <a
-  href="#servicos"
-  className={buttonVariants({ variant: "outline", size: "lg" })}
->
-  Ver serviÃ§os
-</a>
+                href="#servicos"
+                className={buttonVariants({ variant: "outline", size: "lg" })}
+              >
+                Ver serviÃ§os
+              </a>
             </div>
           </div>
 
@@ -87,8 +87,8 @@ export default function Home() {
           </h2>
 
           <p className="text-muted-foreground">
-            Serviços essenciais, preços transparentes e horários definidos
-            para você não perder tempo.
+            Serviços essenciais, preços transparentes e horários definidos para
+            você não perder tempo.
           </p>
         </div>
 
@@ -112,17 +112,14 @@ export default function Home() {
 
               <div className="mt-6 flex items-center gap-2 text-sm text-muted-foreground">
                 <Clock3 className="size-4" />
-                {service.durationMinutes} min	
+                {service.durationMinutes} min
               </div>
             </article>
           ))}
         </div>
       </section>
 
-      <section
-        id="sobre"
-        className="border-y border-border/60 bg-muted/30"
-      >
+      <section id="sobre" className="border-y border-border/60 bg-muted/30">
         <div className="mx-auto max-w-6xl px-6 py-20 lg:px-8">
           <div className="max-w-2xl space-y-5">
             <span className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
@@ -154,10 +151,10 @@ export default function Home() {
             </p>
           </div>
 
-          <Button size="lg">
+          <Link href="/agendar" className={buttonVariants({ size: "lg" })}>
             Agendar horário
             <ArrowRight />
-          </Button>
+          </Link>
         </div>
       </section>
 
