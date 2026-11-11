@@ -10,7 +10,6 @@
 import { sql } from "drizzle-orm";
 
 import { barbershops } from "./barbershops";
-import { updateTag } from "next/cache";
 
 export const businessHours = pgTable(
   "business_hours",
@@ -38,7 +37,6 @@ export const businessHours = pgTable(
   (table) => [
     check("business_hours_valid_day", sql`${table.dayOfWeek} BETWEEN 0 AND 6`),
 
-    check("business_hours_valid_day", sql`${table.dayOfWeek} BETWEEN 0 AND 6`),
 
     check(
       "business_hours_valid_period",

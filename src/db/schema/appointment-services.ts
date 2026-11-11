@@ -1,15 +1,17 @@
-﻿
-import {
+﻿import {
+  check,
   foreignKey,
   integer,
   pgTable,
   timestamp,
   uuid,
   varchar,
-} from "drizzle-orm/pg-core"
+} from "drizzle-orm/pg-core";
 
-import { appointments } from "./appointments"
-import { services } from "./services"
+import { sql } from "drizzle-orm";
+
+import { appointments } from "./appointments";
+import { services } from "./services";
 
 export const appointmentServices = pgTable(
   "appointment_services",
@@ -33,6 +35,16 @@ export const appointmentServices = pgTable(
       .defaultNow(),
   },
   (table) => [
+    check(
+      "appointment_services_duration_positive",
+      sql`${table.durationMinutes} > 0`,
+    ),
+
+    check(
+      "appointment_services_price_non_negative",
+      sql`${table.priceInCents} >= 0`,
+    ),
+
     foreignKey({
       columns: [table.barbershopId, table.appointmentId],
       foreignColumns: [appointments.barbershopId, appointments.id],
@@ -45,4 +57,4 @@ export const appointmentServices = pgTable(
       name: "appointment_services_barbershop_service_fk",
     }).onDelete("restrict"),
   ],
-)
+);
