@@ -1,31 +1,48 @@
 ﻿import {
+  check,
   integer,
   pgTable,
   time,
   timestamp,
   uuid,
-} from "drizzle-orm/pg-core"
+} from "drizzle-orm/pg-core";
 
-import { barbershops } from "./barbershops"
+import { sql } from "drizzle-orm";
 
-export const businessHours = pgTable("business_hours", {
-  id: uuid("id").defaultRandom().primaryKey(),
+import { barbershops } from "./barbershops";
+import { updateTag } from "next/cache";
 
-  barbershopId: uuid("barbershop_id")
-    .notNull()
-    .references(() => barbershops.id, { onDelete: "cascade" }),
+export const businessHours = pgTable(
+  "business_hours",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
 
-  dayOfWeek: integer("day_of_week").notNull(),
+    barbershopId: uuid("barbershop_id")
+      .notNull()
+      .references(() => barbershops.id, { onDelete: "cascade" }),
 
-  startTime: time("start_time").notNull(),
+    dayOfWeek: integer("day_of_week").notNull(),
 
-  endTime: time("end_time").notNull(),
+    startTime: time("start_time").notNull(),
 
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
+    endTime: time("end_time").notNull(),
 
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-})
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    check("business_hours_valid_day", sql`${table.dayOfWeek} BETWEEN 0 AND 6`),
+
+    check("business_hours_valid_day", sql`${table.dayOfWeek} BETWEEN 0 AND 6`),
+
+    check(
+      "business_hours_valid_period",
+      sql`${table.endTime} > ${table.startTime}`,
+    ),
+  ],
+);

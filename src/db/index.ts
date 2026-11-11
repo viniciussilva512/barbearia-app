@@ -7,6 +7,9 @@ import * as barbersSchema from "./schema/barbers";
 import * as servicesSchema from "./schema/services";
 import * as businessHoursSchema from "./schema/business-hours";
 import * as barberSchedulesSchema from "./schema/barber-schedules";
+import * as customersSchema from "./schema/customers";
+import * as appointmentsSchema from "./schema/appointments";
+import * as appointmentsServicesSchema from "./schema/appointment-services";
 
 const databaseUrl = process.env.DATABASE_URL;
 
@@ -25,5 +28,8 @@ export const db = drizzle({
     ...servicesSchema,
     ...businessHoursSchema,
     ...barberSchedulesSchema,
+    ...customersSchema,
+    ...appointmentsSchema,
+    ...appointmentsServicesSchema,
   },
 });

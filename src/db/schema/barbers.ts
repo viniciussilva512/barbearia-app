@@ -1,14 +1,15 @@
 ﻿import {
   boolean,
+  foreignKey,
   pgTable,
   timestamp,
   uniqueIndex,
   uuid,
   varchar,
-} from "drizzle-orm/pg-core"
+} from "drizzle-orm/pg-core";
 
-import { barbershops } from "./barbershops"
-import { users } from "./users"
+import { barbershops } from "./barbershops";
+import { barbershopMembers } from "./users";
 
 export const barbers = pgTable(
   "barbers",
@@ -19,9 +20,7 @@ export const barbers = pgTable(
       .notNull()
       .references(() => barbershops.id, { onDelete: "restrict" }),
 
-    userId: uuid("user_id").references(() => users.id, {
-      onDelete: "set null",
-    }),
+    userId: uuid("user_id"),
 
     name: varchar("name", { length: 120 }).notNull(),
 
@@ -38,9 +37,20 @@ export const barbers = pgTable(
       .defaultNow(),
   },
   (table) => [
+    foreignKey({
+      columns: [table.barbershopId, table.userId],
+      foreignColumns: [
+        barbershopMembers.barbershopId,
+        barbershopMembers.userId,
+      ],
+      name: "barbers_barbershop_member_fk",
+    }).onDelete("restrict"),
+
     uniqueIndex("barbershop_barber_user_unique").on(
       table.barbershopId,
       table.userId,
     ),
+
+    uniqueIndex("barbershop_barber_id_unique").on(table.barbershopId, table.id),
   ],
-)
+);

@@ -1,40 +1,55 @@
 ﻿import {
   boolean,
+  check,
   integer,
   pgTable,
   timestamp,
+  uniqueIndex,
   uuid,
   varchar,
-} from "drizzle-orm/pg-core"
+} from "drizzle-orm/pg-core";
 
-import { barbershops } from "./barbershops"
+import { sql } from "drizzle-orm";
 
-export const services = pgTable("services", {
-  id: uuid("id").defaultRandom().primaryKey(),
+import { barbershops } from "./barbershops";
 
-  barbershopId: uuid("barbershop_id")
-    .notNull()
-    .references(() => barbershops.id, { onDelete: "restrict" }),
+export const services = pgTable(
+  "services",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
 
-  name: varchar("name", { length: 120 }).notNull(),
+    barbershopId: uuid("barbershop_id")
+      .notNull()
+      .references(() => barbershops.id, { onDelete: "restrict" }),
 
-  description: varchar("description", { length: 500 }),
+    name: varchar("name", { length: 120 }).notNull(),
 
-  durationMinutes: integer("duration_minutes").notNull(),
+    description: varchar("description", { length: 500 }),
 
-  priceInCents: integer("price_in_cents").notNull(),
+    durationMinutes: integer("duration_minutes").notNull(),
 
-  requiresDeposit: boolean("requires_deposit")
-    .notNull()
-    .default(false),
+    priceInCents: integer("price_in_cents").notNull(),
 
-  isActive: boolean("is_active").notNull().default(true),
+    requiresDeposit: boolean("requires_deposit").notNull().default(false),
 
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
+    isActive: boolean("is_active").notNull().default(true),
 
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-})
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    check("services_duration_positive", sql`${table.durationMinutes} > 0`),
+
+    check("services_price_non_negative", sql`${table.priceInCents} >= 0`),
+
+    uniqueIndex("barbershop_service_id_unique").on(
+      table.barbershopId,
+      table.id,
+    ),
+  ],
+);
