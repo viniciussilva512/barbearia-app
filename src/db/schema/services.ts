@@ -24,6 +24,8 @@ export const services = pgTable(
 
     name: varchar("name", { length: 120 }).notNull(),
 
+    slug: varchar("slug", { length: 100 }).notNull(),
+
     description: varchar("description", { length: 500 }),
 
     durationMinutes: integer("duration_minutes").notNull(),
@@ -50,6 +52,11 @@ export const services = pgTable(
     uniqueIndex("barbershop_service_id_unique").on(
       table.barbershopId,
       table.id,
+    ),
+
+    uniqueIndex("barbershop_service_slug_unique").on(
+      table.barbershopId,
+      table.slug,
     ),
   ],
 );

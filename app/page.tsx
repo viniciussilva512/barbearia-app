@@ -1,9 +1,17 @@
 ﻿import Link from "next/link";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { services } from "@/src/domain/services/services";
+import { buttonVariants } from "@/components/ui/button";
+import { drizzleServicesRepository } from "@/src/db/repositories/services.repository";
+import { createListActiveServicesUseCase } from "@/src/domain/services/list-active-services.use-case";
 import { ArrowRight, Clock3, Scissors } from "lucide-react";
 
-export default function Home() {
+const BARBERSHOP_DEMO_ID = "3f02e18e-ccad-419d-b078-14c8dfc1d8cb";
+
+const listActiveServices = createListActiveServicesUseCase(
+  drizzleServicesRepository,
+);
+
+export default async function Home() {
+  const services = await listActiveServices(BARBERSHOP_DEMO_ID);
   return (
     <main className="min-h-screen bg-background">
       <header className="border-b border-border/60">
