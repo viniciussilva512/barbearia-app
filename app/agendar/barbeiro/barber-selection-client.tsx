@@ -5,10 +5,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, ArrowRight, Check, UserRound } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { barbers } from "@/src/domain/barbers/barbers";
+import type { Barber } from "@/src/domain/barbers/barbers";
 import type { Service } from "@/src/domain/services/services";
 
-function BarberSelectionContent({ services }: { services: Service[] }) {
+function BarberSelectionContent({
+  services,
+  barbers,
+}: {
+  services: Service[];
+  barbers: Barber[];
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -140,12 +146,14 @@ function BarberSelectionContent({ services }: { services: Service[] }) {
 
 export default function BarberSelectionClient({
   services,
+  barbers,
 }: {
   services: Service[];
+  barbers: Barber[];
 }) {
   return (
     <Suspense>
-      <BarberSelectionContent services={services} />
+      <BarberSelectionContent services={services} barbers={barbers} />
     </Suspense>
   );
 }

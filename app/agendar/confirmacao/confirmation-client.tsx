@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { barbers } from "@/src/domain/barbers/barbers";
+import type { Barber } from "@/src/domain/barbers/barbers";
 import type { Service } from "@/src/domain/services/services";
 import {
   calculateDeposit,
@@ -20,7 +20,13 @@ import {
   servicesRequireDeposit,
 } from "@/src/domain/services/services";
 
-function ConfirmationContent({ services }: { services: Service[] }) {
+function ConfirmationContent({
+  services,
+  barbers,
+}: {
+  services: Service[];
+  barbers: Barber[];
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -44,7 +50,7 @@ function ConfirmationContent({ services }: { services: Service[] }) {
 
   const selectedBarber = useMemo(
     () => barbers.find((barber) => barber.id === selectedBarberId),
-    [selectedBarberId],
+    [barbers, selectedBarberId],
   );
 
   const totalPriceInCents = calculateServicesTotal(selectedServices);
@@ -270,12 +276,14 @@ function ConfirmationContent({ services }: { services: Service[] }) {
 
 export default function ConfirmationClient({
   services,
+  barbers,
 }: {
   services: Service[];
+  barbers: Barber[];
 }) {
   return (
     <Suspense>
-      <ConfirmationContent services={services} />
+      <ConfirmationContent services={services} barbers={barbers} />
     </Suspense>
   );
 }

@@ -5,10 +5,16 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, ArrowRight, UserRound } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { barbers } from "@/src/domain/barbers/barbers";
+import type { Barber } from "@/src/domain/barbers/barbers";
 import type { Service } from "@/src/domain/services/services";
 
-function CustomerDataContent({ services }: { services: Service[] }) {
+function CustomerDataContent({
+  services,
+  barbers,
+}: {
+  services: Service[];
+  barbers: Barber[];
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -29,7 +35,7 @@ function CustomerDataContent({ services }: { services: Service[] }) {
 
   const selectedBarber = useMemo(
     () => barbers.find((barber) => barber.id === selectedBarberId),
-    [selectedBarberId],
+    [barbers, selectedBarberId],
   );
 
   const [name, setName] = useState("");
@@ -208,12 +214,14 @@ function CustomerDataContent({ services }: { services: Service[] }) {
 
 export default function CustomerDataClient({
   services,
+  barbers,
 }: {
   services: Service[];
+  barbers: Barber[];
 }) {
   return (
     <Suspense>
-      <CustomerDataContent services={services} />
+      <CustomerDataContent services={services} barbers={barbers} />
     </Suspense>
   );
 }

@@ -11,11 +11,17 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { barbers } from "@/src/domain/barbers/barbers";
+import type { Barber } from "@/src/domain/barbers/barbers";
 import type { Service } from "@/src/domain/services/services";
 import { getAvailableTimes } from "@/src/domain/schedule/schedule";
 
-function DateSelectionContent({ services }: { services: Service[] }) {
+function DateSelectionContent({
+  services,
+  barbers,
+}: {
+  services: Service[];
+  barbers: Barber[];
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -34,7 +40,7 @@ function DateSelectionContent({ services }: { services: Service[] }) {
 
   const selectedBarber = useMemo(
     () => barbers.find((barber) => barber.id === selectedBarberId),
-    [selectedBarberId],
+    [barbers, selectedBarberId],
   );
 
   const totalDurationMinutes = selectedServices.reduce(
@@ -217,12 +223,14 @@ function DateSelectionContent({ services }: { services: Service[] }) {
 
 export default function DateSelectionClient({
   services,
+  barbers,
 }: {
   services: Service[];
+  barbers: Barber[];
 }) {
   return (
     <Suspense>
-      <DateSelectionContent services={services} />
+      <DateSelectionContent services={services} barbers={barbers} />
     </Suspense>
   );
 }
